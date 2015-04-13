@@ -1,3 +1,5 @@
+package com.inixsoftware.aggregateserver.utils.batch;
+
 /*
     Copyright 2015 Mahesh Khanwalkar
 
@@ -17,10 +19,21 @@
 /* Reads XML Configuration Options & Launches the AggregateServer
  * on all machines in the cluster */
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 public class LaunchServer
 {
-    public static void main(String[] args)
+    static Logger logger = Logger.getLogger(LaunchServer.class);
+
+    public static void main(String[] args) throws InterruptedException
     {
-        //TODO
+        BasicConfigurator.configure();
+
+        logger.setLevel(Level.INFO);
+        logger.info("Preparing to start-up AggregateServer");
+
+        //TODO impl
     }
 }
