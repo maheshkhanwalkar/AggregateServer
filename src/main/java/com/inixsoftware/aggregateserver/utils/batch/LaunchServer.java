@@ -41,6 +41,9 @@ public class LaunchServer
         {
             File serverXML = new File("conf/server.xml");
             parser.parse(serverXML);
+
+            File hadoopXML = new File("conf/hadoop.xml");
+            parser.parse(hadoopXML);
         }
         catch (Exception e)
         {

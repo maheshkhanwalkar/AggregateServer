@@ -63,11 +63,26 @@ public class ConfParser
 
                     if(nameList.getLength() == 0 || valueList.getLength() == 0)
                     {
-                        logger.info("Bad XML Configuration in: " + f.getName());
-                        logger.info("No values specified for <name> and/or <value> tags");
+                        logger.fatal("Bad XML Configuration in: " + f.getName());
+                        logger.fatal("No values specified for <name> and/or <value> tags");
 
                         System.exit(-1);
                     }
+
+                    String name = nameList.item(0).getTextContent();
+                    String value = nameList.item(0).getTextContent();
+
+                    //TODO make this better
+                    if(!name.equals("server.port") && !name.equals("server.mem")
+                            && !name.equals("hadoop.url"))
+                    {
+                        logger.fatal("Bad XML Configuration in: " + f.getName());
+                        logger.fatal("Invalid <name>");
+
+                        System.exit(-1);
+                    }
+
+                    prop.setProperty(name, value);
                 }
 
             }
