@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<configuration>
+    <property>
+        <name>aggregate.dir</name>
+
+        <!-- Replace AGGREGATE_HOME_DIR with actual AggregateServer directory -->
+        <value>AGGREGATE_HOME_DIR</value>
+    </property>
+</configuration>

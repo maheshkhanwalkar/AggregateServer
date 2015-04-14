@@ -60,6 +60,7 @@ public class ConfigParser
                 if(node.getNodeType() == Node.ELEMENT_NODE)
                 {
                     Element elem = (Element)node;
+
                     NodeList nameList = elem.getElementsByTagName("name");
                     NodeList valueList = elem.getElementsByTagName("value");
 
@@ -72,12 +73,12 @@ public class ConfigParser
                     }
 
                     String name = nameList.item(0).getTextContent();
-                    String value = nameList.item(0).getTextContent();
+                    String value = valueList.item(0).getTextContent();
 
                     //TODO make this better e.g. define some class to do this check
 
-                    if(!name.equals("server.port") && !name.equals("server.mem")
-                            && !name.equals("hadoop.url") && !name.equals("deploy.type")
+                    if(!name.equals("server.port") && !name.equals("hadoop.url")
+                            && !name.equals("deploy.type")
                                 && !name.equals("master.host"))
                     {
                         logger.fatal("Bad XML Configuration in: " + file.getName());

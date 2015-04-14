@@ -19,20 +19,21 @@ package com.inixsoftware.aggregateserver.utils.batch;
 /* Reads XML Configuration Options & Launches the AggregateServer
  * on all machines in the cluster */
 
+import com.inixsoftware.aggregateserver.server.Master;
 import com.inixsoftware.aggregateserver.utils.xml.ConfigParser;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 import java.io.File;
 
-public class LaunchServer
+public class LaunchMaster
 {
-    static Logger logger = Logger.getLogger(LaunchServer.class);
+    static Logger logger = Logger.getLogger(LaunchMaster.class);
 
     public static void main(String[] args)
     {
         BasicConfigurator.configure();
-        logger.info("Preparing to start-up AggregateServer");
+        logger.info("Launching Master AggregateServer");
 
         logger.info("Parsing XML Configuration Files");
         ConfigParser parser = new ConfigParser();
@@ -56,8 +57,17 @@ public class LaunchServer
             logger.fatal(null, e);
         }
 
-        //TODO exec JVM instance with params to AggregateServer process
         //TODO support cluster deployment
+        //TODO SSH into machines & exec JVM
 
+        /* BEGIN: TEMPORARY SECTION */
+        // TODO remove this section
+        // NOTE: Right now, any info in conf/master.xml, conf/aggregate-site.xml
+        //      conf/deploy.xml, conf/hadoop.xml are ignored !
+
+        Master master = new Master();
+        master.start();
+
+        /* END: TEMPORARY SECTION */
     }
 }

@@ -9,13 +9,5 @@
         <value>8556</value>
     </property>
 
-    <!-- JVM Memory (for AggregateServer Process)
-         Default: 1024 MiB (1 GiB) -->
 
-    <!-- This field is *optional* -->
-
-    <property>
-        <name>server.mem</name>
-        <value>1024</value>
-    </property>
 </configuration>

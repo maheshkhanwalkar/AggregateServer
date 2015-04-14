@@ -39,4 +39,9 @@ public class ServerProperties
     {
         return properties.getProperty(key);
     }
+
+    public String toString()
+    {
+        return properties.toString();
+    }
 }
