@@ -1,2 +1,2 @@
 # AggregateServer
-Real-Time Hadoop Aggregater Daemon Server
+Real-Time Hadoop Aggregate Server
