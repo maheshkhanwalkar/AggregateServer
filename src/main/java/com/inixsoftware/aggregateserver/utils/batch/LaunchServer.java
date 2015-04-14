@@ -56,6 +56,8 @@ public class LaunchServer
             logger.fatal(null, e);
         }
 
-        //TODO impl
+        //TODO exec JVM instance with params to AggregateServer process
+        //TODO support cluster deployment
+
     }
 }

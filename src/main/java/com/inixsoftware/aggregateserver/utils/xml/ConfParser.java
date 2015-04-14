@@ -90,9 +90,6 @@ public class ConfParser
                 }
 
             }
-
-            //logger.info("Finished parsing " + f.getName());
-
         }
         catch (Exception e)
         {

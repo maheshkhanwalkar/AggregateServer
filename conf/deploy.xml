@@ -13,6 +13,6 @@
 
     <property>
         <name>deploy.type</name>
-        <value>cluster</value>
+        <value>standalone</value>
     </property>
 </configuration>
