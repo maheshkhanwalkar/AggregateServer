@@ -33,6 +33,8 @@ public class ConfParser
 
     public void parse(File f)
     {
+        logger.info("Parsing " + f.getName());
+
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         ServerProperties prop = ServerProperties.getInstance();
 
@@ -86,6 +88,8 @@ public class ConfParser
                 }
 
             }
+
+            logger.info("Finished parsing " + f.getName());
 
         }
         catch (Exception e)
