@@ -17,6 +17,8 @@ package com.inixsoftware.aggregateserver.server;
 */
 
 import com.inixsoftware.aggregateserver.properties.ServerProperties;
+import com.inixsoftware.aggregateserver.socket.ServerImpl;
+import com.inixsoftware.aggregateserver.work.MasterRun;
 import org.apache.log4j.Logger;
 
 public class Master
@@ -28,7 +30,19 @@ public class Master
         logger.info("INIT MASTER");
         ServerProperties prop = ServerProperties.getInstance(); //singleton, by design
 
-        //logger.info(prop);
+        try
+        {
+            int port = Integer.parseInt(prop.getProperty("server.port"));
+            ServerImpl impl = new ServerImpl(port);
+
+            impl.deploy();
+            impl.beginWork(new MasterRun());
+        }
+        catch (Exception e)
+        {
+            logger.fatal("Bad value for property server.port! Check conf/server.xml");
+            System.exit(-1);
+        }
         //TODO
     }
 }

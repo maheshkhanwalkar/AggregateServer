@@ -16,10 +16,33 @@ package com.inixsoftware.aggregateserver.server;
     limitations under the License.
 */
 
+import com.inixsoftware.aggregateserver.properties.ServerProperties;
+import com.inixsoftware.aggregateserver.socket.ServerImpl;
+import com.inixsoftware.aggregateserver.work.SlaveRun;
+import org.apache.log4j.Logger;
+
 public class Slave
 {
+    Logger logger = Logger.getLogger(Master.class);
+
     public void start()
     {
+        logger.info("INIT SLAVE");
+        ServerProperties prop = ServerProperties.getInstance(); //singleton, by design
+
+        try
+        {
+            int port = Integer.parseInt(prop.getProperty("server.port"));
+            ServerImpl impl = new ServerImpl(port);
+
+            impl.deploy();
+            impl.beginWork(new SlaveRun());
+        }
+        catch (Exception e)
+        {
+            logger.fatal("Bad value for property server.port! Check conf/server.xml");
+            System.exit(-1);
+        }
         //TODO
     }
 }
