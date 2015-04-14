@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!-- Sample XML Configuration -->
+<configuration>
+    <!-- Port to bing AggregateServer to -->
+    <!-- This field is *optional* - the server, by default, binds to port 8556 -->
+
+    <property>
+        <name>server.port</name>
+        <value>8556</value>
+    </property>
+
+    <!-- JVM Memory (for AggregateServer Process)
+         Default: 1024 MiB (1 GiB) -->
+
+    <!-- This field is *optional* -->
+
+    <property>
+        <name>server.mem</name>
+        <value>1024</value>
+    </property>
+</configuration>
