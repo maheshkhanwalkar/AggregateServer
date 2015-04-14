@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<!-- Sample XML Configuration -->
+<configuration>
+
+    <!-- Sets the IP Address/Host Name of Master Server (e.g. localhost or 127.0.0.1) -->
+
+    <!-- This field is MANDATORY - whether or not you are deploying in cluster mode.
+         In standalone mode, the master server is the only server running -->
+
+    <property>
+        <name>master.host</name>
+        <value>localhost</value>
+    </property>
+
+</configuration>

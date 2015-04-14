@@ -15,7 +15,7 @@
             <version>2.0.9</version>
         </dependency>
 
-        <!-- Using Older Log4j 1.x  -->
+        <!-- NOTE: Older Log4j (1.2) Used -->
 
         <dependency>
             <groupId>log4j</groupId>

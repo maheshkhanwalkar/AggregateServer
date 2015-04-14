@@ -74,9 +74,11 @@ public class ConfParser
                     String name = nameList.item(0).getTextContent();
                     String value = nameList.item(0).getTextContent();
 
-                    //TODO make this better
+                    //TODO make this better e.g. define some class to do this check
+
                     if(!name.equals("server.port") && !name.equals("server.mem")
-                            && !name.equals("hadoop.url"))
+                            && !name.equals("hadoop.url") && !name.equals("deploy.type")
+                                && !name.equals("master.host"))
                     {
                         logger.fatal("Bad XML Configuration in: " + f.getName());
                         logger.fatal("Invalid <name>");
@@ -89,7 +91,7 @@ public class ConfParser
 
             }
 
-            logger.info("Finished parsing " + f.getName());
+            //logger.info("Finished parsing " + f.getName());
 
         }
         catch (Exception e)

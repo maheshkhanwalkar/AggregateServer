@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- Sample XML Configuration -->
+<configuration>
+
+    <!-- Defines how to deploy AggregateServer -->
+    <!-- The server can be deployed in either standalone or cluster mode -->
+
+    <!-- If cluster mode is specified, then there MUST be one additional file:
+         conf/slaves which indicates slave machines to deploy the server onto
+    -->
+
+    <!-- This property is MANDATORY -->
+
+    <property>
+        <name>deploy.type</name>
+        <value>cluster</value>
+    </property>
+</configuration>
