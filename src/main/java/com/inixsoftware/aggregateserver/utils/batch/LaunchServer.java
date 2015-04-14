@@ -19,7 +19,7 @@ package com.inixsoftware.aggregateserver.utils.batch;
 /* Reads XML Configuration Options & Launches the AggregateServer
  * on all machines in the cluster */
 
-import com.inixsoftware.aggregateserver.utils.xml.ConfParser;
+import com.inixsoftware.aggregateserver.utils.xml.ConfigParser;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
@@ -35,7 +35,7 @@ public class LaunchServer
         logger.info("Preparing to start-up AggregateServer");
 
         logger.info("Parsing XML Configuration Files");
-        ConfParser parser = new ConfParser();
+        ConfigParser parser = new ConfigParser();
 
         try
         {

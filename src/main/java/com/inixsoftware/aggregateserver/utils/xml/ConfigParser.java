@@ -27,13 +27,13 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 
-public class ConfParser
+public class ConfigParser
 {
-    private Logger logger = Logger.getLogger(ConfParser.class);
+    private Logger logger = Logger.getLogger(ConfigParser.class);
 
-    public void parse(File f)
+    public void parse(File file)
     {
-        logger.info("Parsing " + f.getName());
+        logger.info("Parsing " + file.getName());
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         ServerProperties prop = ServerProperties.getInstance();
@@ -41,12 +41,12 @@ public class ConfParser
         try
         {
             DocumentBuilder builder = dbFactory.newDocumentBuilder();
-            Document doc = builder.parse(f);
+            Document doc = builder.parse(file);
 
             doc.getDocumentElement().normalize();
             if(!doc.getDocumentElement().getNodeName().equals("configuration"))
             {
-                logger.fatal("Bad XML Configuration in: " + f.getName());
+                logger.fatal("Bad XML Configuration in: " + file.getName());
                 logger.fatal("Root element MUST be <configuration>");
 
                 System.exit(-1);
@@ -65,7 +65,7 @@ public class ConfParser
 
                     if(nameList.getLength() == 0 || valueList.getLength() == 0)
                     {
-                        logger.fatal("Bad XML Configuration in: " + f.getName());
+                        logger.fatal("Bad XML Configuration in: " + file.getName());
                         logger.fatal("No values specified for <name> and/or <value> tags");
 
                         System.exit(-1);
@@ -80,7 +80,7 @@ public class ConfParser
                             && !name.equals("hadoop.url") && !name.equals("deploy.type")
                                 && !name.equals("master.host"))
                     {
-                        logger.fatal("Bad XML Configuration in: " + f.getName());
+                        logger.fatal("Bad XML Configuration in: " + file.getName());
                         logger.fatal("Invalid <name>");
 
                         System.exit(-1);
