@@ -19,20 +19,33 @@ package com.inixsoftware.aggregateserver.utils.batch;
 /* Reads XML Configuration Options & Launches the AggregateServer
  * on all machines in the cluster */
 
+import com.inixsoftware.aggregateserver.utils.xml.ConfParser;
 import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+
+import java.io.File;
 
 public class LaunchServer
 {
     static Logger logger = Logger.getLogger(LaunchServer.class);
 
-    public static void main(String[] args) throws InterruptedException
+    public static void main(String[] args)
     {
         BasicConfigurator.configure();
-
-        logger.setLevel(Level.INFO);
         logger.info("Preparing to start-up AggregateServer");
+
+        logger.info("Parsing XML Configuration Files");
+        ConfParser parser = new ConfParser();
+
+        try
+        {
+            File serverXML = new File("conf/server.xml");
+            parser.parse(serverXML);
+        }
+        catch (Exception e)
+        {
+            logger.fatal(null, e);
+        }
 
         //TODO impl
     }
