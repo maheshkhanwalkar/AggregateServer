@@ -17,7 +17,7 @@ package com.inixsoftware.aggregateserver.server;
 */
 
 import com.inixsoftware.aggregateserver.properties.ServerProperties;
-import com.inixsoftware.aggregateserver.socket.MasterHandler;
+import com.inixsoftware.aggregateserver.socket.master.MasterHandler;
 import org.apache.log4j.Logger;
 
 public class Master
@@ -37,7 +37,10 @@ public class Master
             MasterHandler master = new MasterHandler(port);
 
             logger.info("Deploying server");
-            master.deploy();
+            Thread t = new Thread(master);
+            t.setName("server");
+
+            t.start();
 
         }
         catch (Exception e)

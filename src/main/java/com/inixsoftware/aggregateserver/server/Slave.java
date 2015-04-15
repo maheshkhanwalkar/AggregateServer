@@ -16,7 +16,6 @@ package com.inixsoftware.aggregateserver.server;
     limitations under the License.
 */
 
-import com.inixsoftware.aggregateserver.socket.SlaveHandler;
 import org.apache.log4j.Logger;
 
 public class Slave
@@ -30,14 +29,14 @@ public class Slave
 
         try
         {
-            SlaveHandler slave = new SlaveHandler(7557); //internal port
-            slave.deploy();
+            //TODO implement this once, master functionality is done
+            //SlaveHandler slave = new SlaveHandler(7557); //internal port
+            //slave.deploy();
         }
         catch (Exception e)
         {
             logger.fatal("Bad value for property server.port! Check conf/server.xml");
             System.exit(-1);
         }
-        //TODO
     }
 }

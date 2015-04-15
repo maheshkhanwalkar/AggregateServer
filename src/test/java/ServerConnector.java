@@ -1,5 +1,3 @@
-package com.inixsoftware.aggregateserver.work;
-
 /*
     Copyright 2015 Mahesh Khanwalkar
 
@@ -16,10 +14,13 @@ package com.inixsoftware.aggregateserver.work;
     limitations under the License.
 */
 
-public class MasterRun implements Runnable
+import java.io.IOException;
+import java.net.Socket;
+
+public class ServerConnector
 {
-    public void run()
+    public static void main(String[] args) throws IOException
     {
-        //TODO
+        Socket socket = new Socket("localhost", 8556);
     }
 }
