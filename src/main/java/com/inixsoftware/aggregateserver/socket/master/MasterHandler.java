@@ -16,17 +16,12 @@ package com.inixsoftware.aggregateserver.socket.master;
     limitations under the License.
 */
 
+import com.inixsoftware.aggregateserver.lang.CommunicationValidator;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -34,120 +29,148 @@ import java.util.concurrent.TimeUnit;
 public class MasterHandler implements Runnable
 {
     private int port;
-    private ServerSocketChannel channel;
+    private ServerSocket server;
 
-    private Selector selector;
     private Logger logger = Logger.getLogger(MasterHandler.class);
-
-    private volatile HashMap<SocketChannel, Boolean> handleMap = new HashMap<SocketChannel, Boolean>();
     private int cores = Runtime.getRuntime().availableProcessors();
 
-    private ThreadPoolExecutor pool = new ThreadPoolExecutor(cores, cores, 10, TimeUnit.SECONDS,
-            new LinkedBlockingQueue<Runnable>());
-
-    private class Daemon implements Runnable
-    {
-        public void run()
-        {
-
-            //TODO
-        }
-    }
+    private ThreadPoolExecutor pool = new ThreadPoolExecutor(cores, cores, 10,
+            TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
 
     public MasterHandler(int port)
     {
         this.port = port;
     }
 
-    private void deploy()
+    private class ClientTalk implements Runnable
     {
-        try
+        private Socket client;
+        private BufferedReader br;
+
+        private BufferedWriter bw;
+        private String hostName;
+
+        public ClientTalk(Socket client)
         {
-            channel = ServerSocketChannel.open().bind(new InetSocketAddress(port));
-            selector = Selector.open();
-
-            channel.configureBlocking(false);
-            channel.register(selector, SelectionKey.OP_ACCEPT);
-
-            handle();
+            this.client = client;
+            hostName = "[" + client.getInetAddress().getHostName() + "]";
         }
-        catch (IOException e)
-        {
-            logger.fatal(null, e);
-            shutdown();
 
-            System.exit(-1);
-        }
-    }
-
-    private void handle()
-    {
-        logger.info("Starting NIO Multiplexer");
-        while(true)
+        private void cleanUp()
         {
             try
             {
-                selector.select();
+                br.close();
+                bw.close();
 
-                Set<SelectionKey> set = selector.selectedKeys();
-                Iterator<SelectionKey> itr = set.iterator();
-
-                while(itr.hasNext())
-                {
-                    SelectionKey cKey = itr.next();
-
-                    if(cKey.isAcceptable())
-                    {
-                        SocketChannel client = channel.accept();
-                        client.configureBlocking(false);
-
-                        client.register(selector, SelectionKey.OP_READ);
-                        logger.info("Client Connected to AggregateServer");
-                    }
-
-                    if(cKey.isReadable())
-                    {
-                        SocketChannel client = (SocketChannel)cKey.channel();
-                        if(handleMap.containsKey(client) && handleMap.get(client))
-                        {
-                            continue; //already being processed!
-                        }
-
-                        handleMap.put(client, true); //handling this
-                        logger.info("Processing Request to AggregateServer");
-
-                        Daemon daemon = new Daemon();
-                        pool.execute(daemon);
-                    }
-
-                    itr.remove();
-                }
+                client.close();
             }
             catch (IOException e)
             {
-                logger.warn(null, e);
+                e.printStackTrace();
             }
         }
-    }
 
-    private void shutdown()
-    {
-        try
+        private String hostName()
         {
-            if (channel != null)
-            {
-                channel.close();
-            }
+            return hostName;
         }
-        catch (IOException e)
+
+        public void run()
         {
-            logger.fatal(null, e);
-            System.exit(-1);
+            logger.info("Processing Request");
+
+            try
+            {
+                br = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                bw = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+
+                String api = br.readLine();
+                if(!CommunicationValidator.isSupportedAPI(api))
+                {
+                    logger.info(hostName() + " Unsupported API - Rejecting!");
+
+                    bw.write("ERR:BAD_API\n");
+                    bw.flush();
+
+                    cleanUp();
+                    logger.info(hostName() + " Connection Closed");
+
+                    return;
+                }
+
+                bw.write("ACK\n");
+
+                while(true)
+                {
+                    String cmd = br.readLine();
+                    if(!CommunicationValidator.isValidCMD(cmd))
+                    {
+                        logger.info(hostName() + " Invalid Command - Rejecting!");
+
+                        bw.write("ERR:BAD_CMD\n");
+                        bw.flush();
+
+                        cleanUp();
+                        break;
+                    }
+
+                    if(cmd.equals("CMD:CLOSE_SOCKET"))
+                    {
+                        bw.write("ACK\n");
+                        bw.flush();
+
+                        cleanUp();
+                        break;
+                    }
+
+
+                    //TODO process command
+                }
+
+                logger.info(hostName() + " Connection Closed");
+
+            }
+            catch (IOException e)
+            {
+                logger.fatal(null, e);
+            }
+
         }
     }
 
     public void run()
     {
-        deploy();
+        try
+        {
+            server = new ServerSocket(port);
+            deploy();
+        }
+        catch (IOException e)
+        {
+            logger.fatal(null, e);
+            System.exit(-1);
+        }
+    }
+
+    private void deploy()
+    {
+        logger.info("Ready to accept clients");
+
+        while(true)
+        {
+            try
+            {
+                Socket client = server.accept();
+                logger.info("Client Connected");
+
+                ClientTalk talk = new ClientTalk(client);
+                pool.execute(talk);
+            }
+            catch (IOException e)
+            {
+                logger.fatal(null, e);
+            }
+        }
     }
 }
