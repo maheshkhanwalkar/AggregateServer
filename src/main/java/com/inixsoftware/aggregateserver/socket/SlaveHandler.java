@@ -24,17 +24,11 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 
-public class ServerImpl
+public class SlaveHandler extends Handler
 {
-    private int port;
-    private ServerSocketChannel channel;
+    private Logger logger = Logger.getLogger(SlaveHandler.class);
 
-    private Selector selector;
-    private SelectionKey key;
-
-    private Logger logger = Logger.getLogger(ServerImpl.class);
-
-    public ServerImpl(int port)
+    public SlaveHandler(int port)
     {
         this.port = port;
     }
@@ -56,11 +50,6 @@ public class ServerImpl
 
             System.exit(-1);
         }
-    }
-
-    public void beginWork(Runnable task)
-    {
-        //TODO
     }
 
     public void shutdown()

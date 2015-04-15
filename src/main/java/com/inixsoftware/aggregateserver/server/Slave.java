@@ -16,9 +16,7 @@ package com.inixsoftware.aggregateserver.server;
     limitations under the License.
 */
 
-import com.inixsoftware.aggregateserver.properties.ServerProperties;
-import com.inixsoftware.aggregateserver.socket.ServerImpl;
-import com.inixsoftware.aggregateserver.work.SlaveRun;
+import com.inixsoftware.aggregateserver.socket.SlaveHandler;
 import org.apache.log4j.Logger;
 
 public class Slave
@@ -28,15 +26,12 @@ public class Slave
     public void start()
     {
         logger.info("INIT SLAVE");
-        ServerProperties prop = ServerProperties.getInstance(); //singleton, by design
+        //ServerProperties prop = ServerProperties.getInstance(); //singleton, by design
 
         try
         {
-            int port = Integer.parseInt(prop.getProperty("server.port"));
-            ServerImpl impl = new ServerImpl(port);
-
-            impl.deploy();
-            impl.beginWork(new SlaveRun());
+            SlaveHandler slave = new SlaveHandler(7557); //internal port
+            slave.deploy();
         }
         catch (Exception e)
         {

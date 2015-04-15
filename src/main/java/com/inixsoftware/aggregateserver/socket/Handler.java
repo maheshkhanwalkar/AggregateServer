@@ -1,4 +1,4 @@
-package com.inixsoftware.aggregateserver.utils.batch;
+package com.inixsoftware.aggregateserver.socket;
 
 /*
     Copyright 2015 Mahesh Khanwalkar
@@ -16,25 +16,18 @@ package com.inixsoftware.aggregateserver.utils.batch;
     limitations under the License.
 */
 
-//SSH ENTRY-POINT
 
-import com.inixsoftware.aggregateserver.server.Slave;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
 
-public class LaunchSlave
+public abstract class Handler
 {
-    static Logger logger = Logger.getLogger(LaunchSlave.class);
+    protected int port;
+    protected ServerSocketChannel channel;
 
-    public static void main(String[] args)
-    {
-        BasicConfigurator.configure();
-        logger.info("Launching Slave AggregateServer");
+    protected Selector selector;
+    protected SelectionKey key;
 
-        //As of right now, no XML conf needed for Slave server, this may change
-        //in the future
-
-        Slave slave = new Slave();
-        slave.start();
-    }
+    public abstract void deploy();
 }

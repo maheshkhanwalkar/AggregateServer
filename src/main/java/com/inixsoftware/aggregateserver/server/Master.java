@@ -17,8 +17,7 @@ package com.inixsoftware.aggregateserver.server;
 */
 
 import com.inixsoftware.aggregateserver.properties.ServerProperties;
-import com.inixsoftware.aggregateserver.socket.ServerImpl;
-import com.inixsoftware.aggregateserver.work.MasterRun;
+import com.inixsoftware.aggregateserver.socket.MasterHandler;
 import org.apache.log4j.Logger;
 
 public class Master
@@ -33,10 +32,13 @@ public class Master
         try
         {
             int port = Integer.parseInt(prop.getProperty("server.port"));
-            ServerImpl impl = new ServerImpl(port);
+            logger.info("Binding server to port " + port);
 
-            impl.deploy();
-            impl.beginWork(new MasterRun());
+            MasterHandler master = new MasterHandler(port);
+
+            logger.info("Deploying server");
+            master.deploy();
+
         }
         catch (Exception e)
         {
