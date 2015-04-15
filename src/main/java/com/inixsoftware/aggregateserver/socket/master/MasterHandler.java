@@ -27,6 +27,9 @@ import java.nio.channels.SocketChannel;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class MasterHandler implements Runnable
 {
@@ -36,7 +39,20 @@ public class MasterHandler implements Runnable
     private Selector selector;
     private Logger logger = Logger.getLogger(MasterHandler.class);
 
-    volatile HashMap<SocketChannel, Boolean> handleMap = new HashMap<SocketChannel, Boolean>();
+    private volatile HashMap<SocketChannel, Boolean> handleMap = new HashMap<SocketChannel, Boolean>();
+    private int cores = Runtime.getRuntime().availableProcessors();
+
+    private ThreadPoolExecutor pool = new ThreadPoolExecutor(cores, cores, 10, TimeUnit.SECONDS,
+            new LinkedBlockingQueue<Runnable>());
+
+    private class Daemon implements Runnable
+    {
+        public void run()
+        {
+
+            //TODO
+        }
+    }
 
     public MasterHandler(int port)
     {
@@ -100,7 +116,8 @@ public class MasterHandler implements Runnable
                         handleMap.put(client, true); //handling this
                         logger.info("Processing Request to AggregateServer");
 
-                        //TODO process
+                        Daemon daemon = new Daemon();
+                        pool.execute(daemon);
                     }
 
                     itr.remove();
@@ -133,5 +150,4 @@ public class MasterHandler implements Runnable
     {
         deploy();
     }
-
 }
