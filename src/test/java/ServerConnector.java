@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 public class ServerConnector
@@ -22,5 +22,18 @@ public class ServerConnector
     public static void main(String[] args) throws IOException
     {
         Socket socket = new Socket("localhost", 8556);
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+        BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+        bw.write("0.0.1\n");
+        bw.flush();
+
+        System.out.println(br.readLine());
+        bw.write("CMD:CLOSE_SOCKET\n");
+        bw.flush();
+
+        System.out.println(br.readLine());
+
     }
 }

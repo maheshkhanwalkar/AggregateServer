@@ -27,6 +27,10 @@ public class CommunicationValidator
     public static boolean isValidCMD(String command)
     {
         String good = command.replace(" ", "");
-        return good.equals("MAKE_AGGREGATE"); //TODO support more commands
+
+        //TODO make a better check & support more commands
+        return !(!good.equals("CMD:MAKE_AGGREGATE") && !good.equals("CMD:CLOSE_SOCKET") &&
+                    !good.equals("CMD:ADD_TO_AGGREGATE"));
+
     }
 }

@@ -100,10 +100,12 @@ public class MasterHandler implements Runnable
                 }
 
                 bw.write("ACK\n");
+                bw.flush();
 
                 while(true)
                 {
                     String cmd = br.readLine();
+
                     if(!CommunicationValidator.isValidCMD(cmd))
                     {
                         logger.info(hostName() + " Invalid Command - Rejecting!");
@@ -123,7 +125,6 @@ public class MasterHandler implements Runnable
                         cleanUp();
                         break;
                     }
-
 
                     //TODO process command
                 }
