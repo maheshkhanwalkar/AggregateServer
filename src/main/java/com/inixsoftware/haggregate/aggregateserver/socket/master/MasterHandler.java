@@ -1,4 +1,4 @@
-package com.inixsoftware.aggregateserver.socket.master;
+package com.inixsoftware.haggregate.aggregateserver.socket.master;
 
 /*
     Copyright 2015 Mahesh Khanwalkar
@@ -16,7 +16,7 @@ package com.inixsoftware.aggregateserver.socket.master;
     limitations under the License.
 */
 
-import com.inixsoftware.aggregateserver.lang.CommunicationValidator;
+import com.inixsoftware.haggregate.aggregateserver.lang.CommunicationValidator;
 import org.apache.log4j.Logger;
 
 import java.io.*;

@@ -1,4 +1,4 @@
-package com.inixsoftware.aggregateserver.properties;
+package com.inixsoftware.haggregate.aggregateserver.lang;
 
 /*
     Copyright 2015 Mahesh Khanwalkar
@@ -16,32 +16,21 @@ package com.inixsoftware.aggregateserver.properties;
     limitations under the License.
 */
 
-import java.util.Properties;
-
-public class ServerProperties
+public class CommunicationValidator
 {
-    private static ServerProperties ourInstance = new ServerProperties();
-    private Properties properties = new Properties();
-
-    public static ServerProperties getInstance()
+    public static boolean isSupportedAPI(String api)
     {
-        return ourInstance;
+        String good = api.replace(" ", "");
+        return good.equals("0.0.1"); //TODO support more API versions
     }
 
-    private ServerProperties() { }
-
-    public void setProperty(String key, String value)
+    public static boolean isValidCMD(String command)
     {
-        properties.setProperty(key, value);
-    }
+        String good = command.replace(" ", "");
 
-    public String getProperty(String key)
-    {
-        return properties.getProperty(key);
-    }
+        //TODO make a better check & support more commands
+        return !(!good.equals("CMD:MAKE_AGGREGATE") && !good.equals("CMD:CLOSE_SOCKET") &&
+                    !good.equals("CMD:ADD_TO_AGGREGATE"));
 
-    public String toString()
-    {
-        return properties.toString();
     }
 }
