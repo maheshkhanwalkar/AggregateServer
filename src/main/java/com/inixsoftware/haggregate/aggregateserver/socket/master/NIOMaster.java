@@ -16,6 +16,7 @@ package com.inixsoftware.haggregate.aggregateserver.socket.master;
     limitations under the License.
 */
 
+import com.inixsoftware.haggregate.aggregateserver.talk.NIOClientTalk;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -23,8 +24,12 @@ import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class NIOMaster implements Runnable
 {
@@ -36,6 +41,10 @@ public class NIOMaster implements Runnable
     private Selector selector;
 
     private Logger logger = Logger.getLogger(NIOMaster.class);
+    private int cores = Runtime.getRuntime().availableProcessors();
+
+    private ThreadPoolExecutor pool = new ThreadPoolExecutor(cores, cores, 10, TimeUnit.SECONDS,
+            new ArrayBlockingQueue<Runnable>(100));
 
     public NIOMaster(int port)
     {
@@ -70,7 +79,25 @@ public class NIOMaster implements Runnable
                 Set<SelectionKey> keys = selector.keys();
 
                 Iterator<SelectionKey> itr = keys.iterator();
-                //TODO process
+                while(itr.hasNext())
+                {
+                    SelectionKey key = itr.next();
+                    if(key.isAcceptable())
+                    {
+                        SocketChannel client = channel.accept();
+                        client.configureBlocking(false);
+
+                        client.register(selector, SelectionKey.OP_READ);
+                    }
+
+                    if(key.isReadable())
+                    {
+                        SocketChannel client = (SocketChannel)key.channel();
+                        NIOClientTalk talk = new NIOClientTalk(client, key, selector);
+
+                        pool.execute(talk);
+                    }
+                }
             }
             catch (IOException e)
             {
