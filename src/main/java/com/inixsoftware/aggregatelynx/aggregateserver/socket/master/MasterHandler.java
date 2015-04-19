@@ -1,4 +1,4 @@
-package com.inixsoftware.haggregate.aggregateserver.socket.master;
+package com.inixsoftware.aggregatelynx.aggregateserver.socket.master;
 
 /*
     Copyright 2015 Mahesh Khanwalkar
@@ -16,7 +16,7 @@ package com.inixsoftware.haggregate.aggregateserver.socket.master;
     limitations under the License.
 */
 
-import com.inixsoftware.haggregate.aggregateserver.talk.ClientTalk;
+import com.inixsoftware.aggregatelynx.aggregateserver.talk.ClientTalk;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

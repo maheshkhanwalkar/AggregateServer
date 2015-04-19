@@ -1,4 +1,4 @@
-package com.inixsoftware.haggregate.aggregateserver.socket.master;
+package com.inixsoftware.aggregatelynx.aggregateserver.socket.master;
 
 /*
     Copyright 2015 Mahesh Khanwalkar
@@ -16,7 +16,7 @@ package com.inixsoftware.haggregate.aggregateserver.socket.master;
     limitations under the License.
 */
 
-import com.inixsoftware.haggregate.aggregateserver.talk.NIOClientTalk;
+import com.inixsoftware.aggregatelynx.aggregateserver.talk.NIOClientTalk;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -93,8 +93,9 @@ public class NIOMaster implements Runnable
                     if(key.isReadable())
                     {
                         SocketChannel client = (SocketChannel)key.channel();
-                        NIOClientTalk talk = new NIOClientTalk(client, key, selector);
+                        key.cancel();
 
+                        NIOClientTalk talk = new NIOClientTalk(client, key, selector);
                         pool.execute(talk);
                     }
                 }

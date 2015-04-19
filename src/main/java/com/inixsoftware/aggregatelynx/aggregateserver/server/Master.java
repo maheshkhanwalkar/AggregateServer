@@ -1,4 +1,4 @@
-package com.inixsoftware.haggregate.aggregateserver.server;
+package com.inixsoftware.aggregatelynx.aggregateserver.server;
 
 /*
     Copyright 2015 Mahesh Khanwalkar
@@ -16,8 +16,8 @@ package com.inixsoftware.haggregate.aggregateserver.server;
     limitations under the License.
 */
 
-import com.inixsoftware.haggregate.aggregateserver.properties.ServerProperties;
-import com.inixsoftware.haggregate.aggregateserver.socket.master.MasterHandler;
+import com.inixsoftware.aggregatelynx.aggregateserver.properties.ServerProperties;
+import com.inixsoftware.aggregatelynx.aggregateserver.socket.master.MasterHandler;
 import org.apache.log4j.Logger;
 
 public class Master

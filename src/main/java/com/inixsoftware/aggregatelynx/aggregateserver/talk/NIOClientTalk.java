@@ -1,4 +1,4 @@
-package com.inixsoftware.haggregate.aggregateserver.talk;
+package com.inixsoftware.aggregatelynx.aggregateserver.talk;
 
 /*
     Copyright 2015 Mahesh Khanwalkar
@@ -42,8 +42,6 @@ public class NIOClientTalk implements Runnable
 
     public void run()
     {
-        key.cancel();
-
         ByteBuffer bLen = ByteBuffer.allocate(4);
         try
         {
@@ -51,6 +49,7 @@ public class NIOClientTalk implements Runnable
             int len = bLen.getInt();
 
             //TODO read until len is achieved
+            ByteBuffer buffer = ByteBuffer.allocate(len);
         }
         catch (IOException e)
         {

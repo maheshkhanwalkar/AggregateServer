@@ -1,6 +1,6 @@
-package com.inixsoftware.haggregate.aggregateserver.talk;
+package com.inixsoftware.aggregatelynx.aggregateserver.talk;
 
-import com.inixsoftware.haggregate.aggregateserver.lang.CommunicationValidator;
+import com.inixsoftware.aggregatelynx.aggregateserver.lang.CommunicationValidator;
 import org.apache.log4j.Logger;
 
 import java.io.*;

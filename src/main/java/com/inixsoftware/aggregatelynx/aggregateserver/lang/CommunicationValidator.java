@@ -1,4 +1,4 @@
-package com.inixsoftware.haggregate.aggregateserver.lang;
+package com.inixsoftware.aggregatelynx.aggregateserver.lang;
 
 /*
     Copyright 2015 Mahesh Khanwalkar

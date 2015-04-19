@@ -1,4 +1,4 @@
-package com.inixsoftware.haggregate.aggregateserver.properties;
+package com.inixsoftware.aggregatelynx.aggregateserver.properties;
 
 /*
     Copyright 2015 Mahesh Khanwalkar

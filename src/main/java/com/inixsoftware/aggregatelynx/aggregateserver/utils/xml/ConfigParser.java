@@ -1,4 +1,4 @@
-package com.inixsoftware.haggregate.aggregateserver.utils.xml;
+package com.inixsoftware.aggregatelynx.aggregateserver.utils.xml;
 
 /*
     Copyright 2015 Mahesh Khanwalkar
@@ -16,7 +16,7 @@ package com.inixsoftware.haggregate.aggregateserver.utils.xml;
     limitations under the License.
 */
 
-import com.inixsoftware.haggregate.aggregateserver.properties.ServerProperties;
+import com.inixsoftware.aggregatelynx.aggregateserver.properties.ServerProperties;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
