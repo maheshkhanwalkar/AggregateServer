@@ -16,6 +16,7 @@ package com.inixsoftware.aggregatelynx.aggregateserver.talk;
     limitations under the License.
 */
 
+import com.inixsoftware.nioflex.nio.NIOServer;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -24,9 +25,23 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 
-public class NIOClientTalk implements Runnable
+public class NIOClientTalk extends NIOServer
 {
-    private SocketChannel client;
+    private Logger logger = Logger.getLogger(NIOClientTalk.class);
+
+    @Override
+    public void handleAccept(SocketChannel socketChannel, SelectionKey selectionKey)
+    {
+        logger.info("Client Accepted");
+    }
+
+    @Override
+    public void handleRead(SocketChannel socketChannel, SelectionKey selectionKey)
+    {
+
+    }
+
+    /*private SocketChannel client;
     private SelectionKey key;
 
     private Selector selector;
@@ -55,5 +70,5 @@ public class NIOClientTalk implements Runnable
         {
             logger.warn(null, e);
         }
-    }
+    }*/
 }

@@ -17,6 +17,7 @@ package com.inixsoftware.aggregatelynx.aggregateserver.socket.master;
 */
 
 import com.inixsoftware.aggregatelynx.aggregateserver.talk.NIOClientTalk;
+import com.inixsoftware.nioflex.nio.ServerDispatch;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -32,6 +33,28 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class NIOMaster implements Runnable
+{
+    private int port;
+    private Logger logger = Logger.getLogger(NIOMaster.class);
+
+    public NIOMaster(int port)
+    {
+        this.port = port;
+    }
+
+    public void run()
+    {
+        logger.info("Dispatching Server");
+        NIOClientTalk server = new NIOClientTalk();
+
+        ServerDispatch dispatch = new ServerDispatch(port, server);
+        dispatch.startUp();
+
+        dispatch.joinThread();
+    }
+}
+
+/*public class NIOMaster implements Runnable
 {
     //TODO NIO trial to allow for better scalability for the AggregateServer
 
@@ -106,4 +129,4 @@ public class NIOMaster implements Runnable
             }
         }
     }
-}
+}*/

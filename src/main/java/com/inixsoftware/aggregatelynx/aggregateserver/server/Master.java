@@ -18,6 +18,7 @@ package com.inixsoftware.aggregatelynx.aggregateserver.server;
 
 import com.inixsoftware.aggregatelynx.aggregateserver.properties.ServerProperties;
 import com.inixsoftware.aggregatelynx.aggregateserver.socket.master.MasterHandler;
+import com.inixsoftware.aggregatelynx.aggregateserver.socket.master.NIOMaster;
 import org.apache.log4j.Logger;
 
 public class Master
@@ -34,9 +35,10 @@ public class Master
             int port = Integer.parseInt(prop.getProperty("server.port"));
             logger.info("Binding server to port " + port);
 
-            MasterHandler master = new MasterHandler(port);
+            NIOMaster master = new NIOMaster(port);
 
             logger.info("Deploying server");
+
             Thread t = new Thread(master);
             t.setName("server");
 

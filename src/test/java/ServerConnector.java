@@ -23,7 +23,7 @@ public class ServerConnector
     {
         Socket socket = new Socket("localhost", 8556);
 
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+       /* BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         bw.write("0.0.1\n");
@@ -33,7 +33,8 @@ public class ServerConnector
         bw.write("CMD:CLOSE_SOCKET\n");
         bw.flush();
 
-        System.out.println(br.readLine());
+        System.out.println(br.readLine());*/
+        socket.close();
 
     }
 }
