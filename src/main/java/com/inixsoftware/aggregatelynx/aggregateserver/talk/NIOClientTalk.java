@@ -19,10 +19,7 @@ package com.inixsoftware.aggregatelynx.aggregateserver.talk;
 import com.inixsoftware.nioflex.nio.NIOServer;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 
 public class NIOClientTalk extends NIOServer
@@ -38,37 +35,7 @@ public class NIOClientTalk extends NIOServer
     @Override
     public void handleRead(SocketChannel socketChannel, SelectionKey selectionKey)
     {
-
+        //TODO
     }
 
-    /*private SocketChannel client;
-    private SelectionKey key;
-
-    private Selector selector;
-    private Logger logger = Logger.getLogger(NIOClientTalk.class);
-
-    public NIOClientTalk(SocketChannel client, SelectionKey key, Selector selector)
-    {
-        this.client = client;
-        this.key = key;
-
-        this.selector = selector;
-    }
-
-    public void run()
-    {
-        ByteBuffer bLen = ByteBuffer.allocate(4);
-        try
-        {
-            client.read(bLen);
-            int len = bLen.getInt();
-
-            //TODO read until len is achieved
-            ByteBuffer buffer = ByteBuffer.allocate(len);
-        }
-        catch (IOException e)
-        {
-            logger.warn(null, e);
-        }
-    }*/
 }

@@ -17,7 +17,6 @@ package com.inixsoftware.aggregatelynx.aggregateserver.server;
 */
 
 import com.inixsoftware.aggregatelynx.aggregateserver.properties.ServerProperties;
-import com.inixsoftware.aggregatelynx.aggregateserver.socket.master.MasterHandler;
 import com.inixsoftware.aggregatelynx.aggregateserver.socket.master.NIOMaster;
 import org.apache.log4j.Logger;
 
