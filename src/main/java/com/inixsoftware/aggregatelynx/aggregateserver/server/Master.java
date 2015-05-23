@@ -18,7 +18,8 @@ package com.inixsoftware.aggregatelynx.aggregateserver.server;
 
 import com.inixsoftware.aggregatelynx.aggregateserver.properties.ServerProperties;
 import com.inixsoftware.aggregatelynx.aggregateserver.socket.master.NIOMaster;
-import org.apache.log4j.Logger;
+
+import org.apache.log4j.*;
 
 public class Master
 {
@@ -49,6 +50,6 @@ public class Master
             logger.fatal("Bad value for property server.port! Check conf/server.xml");
             System.exit(-1);
         }
-        //TODO
+
     }
 }
