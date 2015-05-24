@@ -56,6 +56,7 @@ public class AggregateTable
     public void aggregate(String data)
     {
        String[] split = data.split(",");
+       boolean logicAnd = true;
 
        for(int i = 0; i < aggregates.size(); i++)
        {
@@ -72,11 +73,14 @@ public class AggregateTable
                 }
            }
 
-           if(split[pos].equals(compare.get(i)))
+           if(!split[pos].equals(compare.get(i)))
            {
-               count++; //match (currently OR'ing aggregates)
+               logicAnd = false;
            }
        }
+
+       if(logicAnd)
+           count++;
     }
 
     public int getCount()
